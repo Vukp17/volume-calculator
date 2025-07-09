@@ -1,0 +1,91 @@
+.footer {
+  background-color: #343a40;
+  color: #f8f9fa;
+  padding: 3rem 1rem;
+  margin-top: 3rem;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.footer-logo img {
+  max-height: 50px;
+  margin-bottom: 0.5rem;
+}
+
+.footer-logo span {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.footer-logo p {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: #adb5bd;
+  margin: 0;
+}
+
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-column h3 {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.footer-column p,
+.footer-column ul {
+  color: #ced4da;
+  line-height: 1.8;
+  font-size: 0.9rem;
+}
+
+.footer-column a {
+  color: #ced4da;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-column a:hover {
+  color: #ffffff;
+}
+
+.footer-column a[href^="tel"] {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.quick-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.quick-links li::before {
+  content: '>';
+  margin-right: 0.5rem;
+  color: #6c757d;
+} 

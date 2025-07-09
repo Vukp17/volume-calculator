@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  volume-calculator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: volume-calculator-app
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - volume-calc-network
+
+networks:
+  volume-calc-network:
+    driver: bridge 

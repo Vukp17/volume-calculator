@@ -1,0 +1,82 @@
+---
+description: Angular Best Practices (v17+)
+globs:
+  - '**/*.component.ts'
+  - '**/*.component.html'
+  - '**/*.component.css'
+---
+
+# Angular Best Practices (v17+)
+
+This document outlines best practices for modern Angular development, focusing on Standalone APIs, Signals, and component structure.
+
+## 1. Standalone by Default
+
+All new components, directives, and pipes should be `standalone: true`. This simplifies `NgModule` management and improves tree-shakability. When creating a component, make sure to set the standalone flag to true and import necessary dependencies directly into the component.
+
+Use tailwind syntax as base for style 
+
+```typescript
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './example.component.html',
+  styleUrls: ['./example.component.css']
+})
+export class ExampleComponent {
+  // ...
+}
+```
+You can see an example in the root component: `[app.ts](mdc:src/app/app.ts)`
+
+## 2. Component File Structure
+
+Always create separate files for a component's logic, template, and styles. This separation of concerns improves readability and maintainability. Each component should consist of:
+
+-   `my-component.component.ts`: The TypeScript logic and component definition.
+-   `my-component.component.html`: The HTML template. See `[app.html](mdc:src/app/app.html)` for an example.
+-   `my-component.component.css`: Component-specific styles. See `[app.css](mdc:src/app/app.css)` for an example.
+
+## 3. State Management: Signals and RxJS
+
+Employ a modern state management strategy using both Signals and RxJS.
+
+-   **Use Signals for Component State**: For managing state within a component or sharing state locally between components, Angular Signals are the preferred choice. They offer fine-grained reactivity and improved performance.
+
+-   **Use RxJS for Async & Event Streams**: RxJS remains essential for handling complex asynchronous operations. It excels with event-based streams, such as those from `HttpClient` for API requests, `Router` events, or WebSockets.
+
+## 4. New Template Control Flow
+
+Use the new built-in control flow syntax (`@if`, `@for`, `@switch`) in your component templates. This syntax is more ergonomic, easier to read, and can lead to better performance compared to the older `*ngIf`, `*ngFor`, and `*ngSwitch` directives.
+
+```html
+<!-- Instead of *ngIf -->
+@if (user.isLoggedIn) {
+  <span>Welcome, {{ user.name }}</span>
+} @else {
+  <a href="/login">Log in</a>
+}
+
+<!-- Instead of *ngFor -->
+@for (item of items; track item.id) {
+  <li>{{ item.name }}</li>
+}
+```
+
+## 5. Dependency Injection for Standalone Components
+
+With standalone components, the way you provide dependencies is more direct.
+
+-   **Component-Level Services**: If a service is only used by a single component and its children, provide it directly in the component's `providers` array in the `@Component` decorator.
+-   **Application-Level Services**: For services that need to be singletons across the application, use the `providedIn: 'root'` property in the `@Injectable` decorator. Alternatively, you can provide them in the `bootstrapApplication` call, which you can find in `[app.config.ts](mdc:src/app/app.config.ts)`.
+
+By following these guidelines, you'll be leveraging the latest and most efficient features of Angular.
+
+
+
+By following these guidelines, you'll be leveraging the latest and most efficient features of Angular.
+

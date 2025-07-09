@@ -1,0 +1,32 @@
+<div class="room-container">
+  <div class="room-header">
+    <div class="header-left">
+      <mat-icon class="room-icon">{{ room.category.image }}</mat-icon>
+      <h2>{{ room.name }}</h2>
+    </div>
+    <button mat-icon-button (click)="openDimensionsModal()" class="info-button" title="View item dimensions">
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
+  <div class="items-grid">
+    <div *ngFor="let item of room.category.items" class="item-card">
+      <span class="item-name">{{ item.name }}</span>
+      <div class="quantity-control">
+        <button (click)="decrement(item)">-</button>
+        <input #quantityInput type="number" [value]="item.quantity" (change)="onQuantityChange(item, quantityInput.valueAsNumber)" min="0">
+        <button (click)="increment(item)">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="room-summary">
+    <div class="summary-item">
+      <span>Subtotal {{ room.name }}</span>
+      <span>{{ room.subtotalVolume | number:'1.2-2' }} m³</span>
+    </div>
+    <div class="summary-item">
+      <span>Est. {{ room.name }} Cartons</span>
+      <span>{{ room.estimatedCartons }}</span>
+    </div>
+  </div>
+</div>
+<hr class="section-divider"> 
