@@ -23,7 +23,7 @@ export class App implements OnInit {
   constructor(
     private dataService: DataService,
     private calculator: CalculatorService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const categories = this.dataService.getCategories();
@@ -35,6 +35,7 @@ export class App implements OnInit {
       estimatedCartons: 0,
     }));
     this.updateTotals();
+    this.addJsonLd();
   }
 
   onRoomChange(updatedRoom: Room): void {
@@ -48,5 +49,26 @@ export class App implements OnInit {
   updateTotals(): void {
     this.totalVolume = this.calculator.calculateGrandTotalVolume(this.rooms);
     this.totalCartons = this.calculator.calculateGrandTotalCartons(this.rooms);
+  }
+
+  // app.component.ts
+  private addJsonLd() {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Container Volume Calculator",
+      "description": "Calculate shipping and storage container volumes",
+      "url": "https://containerzone.com.au/calculator",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "provider": {
+        "@type": "Organization",
+        "name": "ContainerZone",
+        "url": "https://containerzone.com.au"
+      }
+    });
+    document.head.appendChild(script);
   }
 }
