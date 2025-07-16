@@ -23,4 +23,10 @@ export interface Room {
   category: Category;
   subtotalVolume: number;
   estimatedCartons: number;
+  boxes: {
+    small: number;
+    medium: number;
+    large: number;
+    custom: Array<{ length: number; width: number; height: number; quantity: number }>;
+  };
 } 

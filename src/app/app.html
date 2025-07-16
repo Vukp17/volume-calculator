@@ -1,6 +1,7 @@
 <app-header></app-header>
 
 <main class="container">
+  <button (click)="resetAll()" class="reset-btn">Reset All</button>
   <div class="rooms-list">
     <app-room *ngFor="let room of rooms" [room]="room" (roomChange)="onRoomChange($event)"></app-room>
   </div>

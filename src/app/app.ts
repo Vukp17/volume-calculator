@@ -33,6 +33,12 @@ export class App implements OnInit {
       category: category,
       subtotalVolume: 0,
       estimatedCartons: 0,
+      boxes: {
+        small: 0,
+        medium: 0,
+        large: 0,
+        custom: []
+      }
     }));
     this.updateTotals();
     this.addJsonLd();
@@ -49,6 +55,18 @@ export class App implements OnInit {
   updateTotals(): void {
     this.totalVolume = this.calculator.calculateGrandTotalVolume(this.rooms);
     this.totalCartons = this.calculator.calculateGrandTotalCartons(this.rooms);
+  }
+
+  resetAll(): void {
+    this.rooms.forEach(room => {
+      room.category.items.forEach(item => item.quantity = 0);
+      room.boxes.small = 0;
+      room.boxes.medium = 0;
+      room.boxes.large = 0;
+      room.boxes.custom = [];
+      this.calculator.updateRoomCalculations(room);
+    });
+    this.updateTotals();
   }
 
   // app.component.ts
