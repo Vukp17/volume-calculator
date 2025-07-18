@@ -1,27 +1,79 @@
-.header {
-  display: flex;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #343a40;
-  color: white;
-  margin-bottom: 2rem;
-}
-
-.logo {
-  height: 40px;
-  margin-right: 1rem;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  font-weight: 500;
-}
-
-.container {
+/* Main App Container */
+main.container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 2rem 1rem;
+  background-color: var(--cz-white);
+  border-radius: var(--cz-border-radius-lg);
+  box-shadow: var(--cz-shadow);
+  margin-top: -1rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Page Header */
+.page-header {
+  text-align: left;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+  background-color: transparent;
+  color: var(--cz-gray-900);
+}
+
+.header-content {
+  display: block;
+}
+
+.page-header h1 {
+  color: var(--cz-gray-900);
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.header-underline {
+  width: 60px;
+  height: 4px;
+  background-color: var(--cz-primary);
+  margin-bottom: 1rem;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: var(--cz-gray-700);
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Reset Button */
+.reset-btn {
+  background-color: var(--cz-danger);
+  color: var(--cz-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--cz-border-radius);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.reset-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+  box-shadow: var(--cz-shadow-lg);
+}
+
+/* Rooms List */
+.rooms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .add-room-section {

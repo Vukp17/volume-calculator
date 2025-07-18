@@ -13,7 +13,8 @@
       <span class="item-name">{{ item.name }}</span>
       <div class="quantity-control">
         <button (click)="decrement(item)">-</button>
-        <input #quantityInput type="number" [value]="item.quantity" (change)="onQuantityChange(item, quantityInput.valueAsNumber)" min="0">
+        <input #quantityInput type="number" [value]="item.quantity"
+          (change)="onQuantityChange(item, quantityInput.valueAsNumber)" min="0">
         <button (click)="increment(item)">+</button>
       </div>
     </div>
@@ -21,54 +22,77 @@
   <!-- Boxes Section -->
   <div class="boxes-section">
     <h3>Moving Boxes</h3>
+
+    <!-- Standard Boxes -->
     <div class="standard-boxes">
-      <div class="box-row">
-        <span class="box-label">Small Box (403x301x330mm, 40L)</span>
+      <div *ngFor="let box of getStandardBoxes()" class="box-row">
+        <span class="box-label">{{ box.name }}</span>
         <div class="quantity-control">
-          <button (click)="changeBoxQuantity('small', -1)">-</button>
-          <input #smallBoxInput type="number" [value]="room.boxes.small" min="0" (change)="onBoxInput('small', smallBoxInput.valueAsNumber)">
-          <button (click)="changeBoxQuantity('small', 1)">+</button>
+          <button (click)="changeBoxQuantity(box.id, -1)">-</button>
+          <input type="number" [value]="box.quantity" min="0"
+            (change)="onBoxQuantityInput(box.id, $any($event.target).valueAsNumber)">
+          <button (click)="changeBoxQuantity(box.id, 1)">+</button>
         </div>
-      </div>
-      <div class="box-row">
-        <span class="box-label">Medium Box (406x298x431mm, 52L)</span>
-        <div class="quantity-control">
-          <button (click)="changeBoxQuantity('medium', -1)">-</button>
-          <input #mediumBoxInput type="number" [value]="room.boxes.medium" min="0" (change)="onBoxInput('medium', mediumBoxInput.valueAsNumber)">
-          <button (click)="changeBoxQuantity('medium', 1)">+</button>
-        </div>
-      </div>
-      <div class="box-row">
-        <span class="box-label">Large Box (431x406x596mm, 104L)</span>
-        <div class="quantity-control">
-          <button (click)="changeBoxQuantity('large', -1)">-</button>
-          <input #largeBoxInput type="number" [value]="room.boxes.large" min="0" (change)="onBoxInput('large', largeBoxInput.valueAsNumber)">
-          <button (click)="changeBoxQuantity('large', 1)">+</button>
-        </div>
+        <span class="box-volume">{{ (box.volume * box.quantity) | number:'1.3-3' }} m³</span>
       </div>
     </div>
-    <div class="custom-boxes">
+
+    <!-- Add Custom Box Form -->
+    <div class="add-custom-box-form">
+      <h4>Add Custom Box</h4>
+      <div class="dimension-inputs">
+        <input type="number" placeholder="Length (mm)" [(ngModel)]="newCustomBox.length" min="1"
+          class="dimension-input">
+        <span>×</span>
+        <input type="number" placeholder="Width (mm)" [(ngModel)]="newCustomBox.width" min="1" class="dimension-input">
+        <span>×</span>
+        <input type="number" placeholder="Height (mm)" [(ngModel)]="newCustomBox.height" min="1"
+          class="dimension-input">
+        <button (click)="addCustomBox()" class="add-btn"
+          [disabled]="!newCustomBox.length || !newCustomBox.width || !newCustomBox.height"
+          title="Add custom box">Add</button>
+      </div>
+    </div>
+
+    <!-- Custom Boxes -->
+    <div *ngIf="getCustomBoxes().length > 0" class="custom-boxes">
       <h4>Custom Boxes</h4>
-      <div *ngFor="let box of room.boxes.custom; let i = index" class="custom-box-row">
-        <input type="number" placeholder="Length (mm)" [(ngModel)]="box.length" min="1">
-        <input type="number" placeholder="Width (mm)" [(ngModel)]="box.width" min="1">
-        <input type="number" placeholder="Height (mm)" [(ngModel)]="box.height" min="1">
-        <input type="number" placeholder="Qty" [(ngModel)]="box.quantity" min="0">
-        <button (click)="removeCustomBox(i)" title="Remove">&times;</button>
+      <div *ngFor="let box of getCustomBoxes()" class="box-row">
+        <span class="box-label">{{ box.name }}</span>
+        <div class="quantity-control">
+          <button (click)="changeBoxQuantity(box.id, -1)">-</button>
+          <input type="number" [value]="box.quantity" min="0"
+            (change)="onBoxQuantityInput(box.id, $any($event.target).valueAsNumber)">
+          <button (click)="changeBoxQuantity(box.id, 1)">+</button>
+        </div>
+        <span class="box-volume">{{ (box.volume * box.quantity) | number:'1.3-3' }} m³</span>
+        <button (click)="removeBox(box.id)" class="remove-btn" title="Remove">&times;</button>
       </div>
-      <button (click)="addCustomBox()" class="add-custom-box-btn">+ Add Custom Box</button>
     </div>
+
+    <!-- Total Boxes Volume -->
+    <!-- <div class="boxes-total">
+      <span>Total Boxes Volume: {{ (room.boxSubtotals?.total || 0) | number:'1.3-3' }} m³</span>
+    </div> -->
   </div>
   <!-- End Boxes Section -->
   <div class="room-summary">
     <div class="summary-item">
-      <span>Subtotal {{ room.name }}</span>
-      <span>{{ room.subtotalVolume | number:'1.2-2' }} m³</span>
+      <span>Items Volume</span>
+      <span>{{ (room.subtotalVolume - (room.boxSubtotals?.total || 0)) | number:'1.2-2' }} m³</span>
+    </div>
+    <div class="summary-item">
+      <span>Boxes Volume</span>
+      <span>{{ (room.boxSubtotals?.total || 0) | number:'1.2-2' }} m³</span>
     </div>
     <div class="summary-item">
       <span>Est. {{ room.name }} Cartons</span>
       <span>{{ room.estimatedCartons }}</span>
     </div>
+    <div class="summary-item total">
+      <span>Subtotal {{ room.name }}</span>
+      <span>{{ room.subtotalVolume | number:'1.2-2' }} m³</span>
+    </div>
   </div>
 </div>
-<hr class="section-divider"> 
+<hr class="section-divider">

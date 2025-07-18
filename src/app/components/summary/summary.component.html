@@ -1,5 +1,11 @@
 <div class="summary-container">
-  <h3>Summary</h3>
+  <div class="summary-header">
+    <h3>Summary</h3>
+    <button (click)="onResetAll()" class="reset-btn" title="Reset all calculations">
+      <span class="reset-icon">↻</span>
+      Reset All
+    </button>
+  </div>
   <div class="summary-details">
     <div class="summary-total">
       <span>Total Volume:</span>

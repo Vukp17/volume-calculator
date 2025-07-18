@@ -1,12 +1,21 @@
 <app-header></app-header>
 
 <main class="container">
-  <button (click)="resetAll()" class="reset-btn">Reset All</button>
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-text">
+        <h1>Volume Calculator</h1>
+        <div class="header-underline"></div>
+        <p>Calculate your moving volume with our professional moving box calculator</p>
+      </div>
+    </div>
+  </div>
+  
   <div class="rooms-list">
     <app-room *ngFor="let room of rooms" [room]="room" (roomChange)="onRoomChange($event)"></app-room>
   </div>
 
-  <app-summary *ngIf="rooms.length > 0" [totalVolume]="totalVolume" [totalCartons]="totalCartons"></app-summary>
+  <app-summary *ngIf="rooms.length > 0" [totalVolume]="totalVolume" [totalCartons]="totalCartons" (resetAll)="resetAll()"></app-summary>
 </main>
 
 <app-footer></app-footer>

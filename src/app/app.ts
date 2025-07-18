@@ -33,12 +33,7 @@ export class App implements OnInit {
       category: category,
       subtotalVolume: 0,
       estimatedCartons: 0,
-      boxes: {
-        small: 0,
-        medium: 0,
-        large: 0,
-        custom: []
-      }
+      boxes: [] // Will be initialized by the calculator service
     }));
     this.updateTotals();
     this.addJsonLd();
@@ -60,10 +55,10 @@ export class App implements OnInit {
   resetAll(): void {
     this.rooms.forEach(room => {
       room.category.items.forEach(item => item.quantity = 0);
-      room.boxes.small = 0;
-      room.boxes.medium = 0;
-      room.boxes.large = 0;
-      room.boxes.custom = [];
+      // Reset all box quantities to 0
+      room.boxes.forEach(box => box.quantity = 0);
+      // Remove custom boxes (keep only standard ones)
+      room.boxes = room.boxes.filter(box => box.isStandard);
       this.calculator.updateRoomCalculations(room);
     });
     this.updateTotals();

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,4 +11,9 @@ import { CommonModule } from '@angular/common';
 export class SummaryComponent {
   @Input() totalVolume = 0;
   @Input() totalCartons = 0;
+  @Output() resetAll = new EventEmitter<void>();
+
+  onResetAll() {
+    this.resetAll.emit();
+  }
 } 
